@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 
 import Home from '../screens/Home';
 import MenuBar from "../screens/MenuBar";
+import ProductDetail from "../screens/ProductDetail";
 
 const Stack = createStackNavigator();
 
@@ -78,6 +79,13 @@ function StackNavigation() {
       <Stack.Screen
         name="MenuBar"
         component={MenuBar}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="ProductDetail"
+        component={ProductDetail}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
         }}
