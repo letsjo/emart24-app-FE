@@ -6,7 +6,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <RecoilRoot>
-        <StackNavigation></StackNavigation>
+        <StackNavigation />
       </RecoilRoot>
     </NavigationContainer>
   )
