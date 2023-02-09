@@ -1,4 +1,8 @@
-# 🛒 **EMART24 APP** - React Native ( FROM KDT Mini Project )
+# 🛒 **EMART24 APP** - React Native
+
+### FROM KDT Mini Project
+
+---
 
 # 🎯 **프로젝트 개요**
 
