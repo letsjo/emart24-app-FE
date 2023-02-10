@@ -3,9 +3,13 @@ import styled from 'styled-components/native';
 
 import userApi from '../apis/userApi'
 import { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';
 
-const Container = styled.View`
+import ProductCard from '../components/ProductCard';
+import ImageSlider from '../components/ImageSlider';
+
+import { sliderBanner } from '../datas/SliderImageData';
+
+const Container = styled.ScrollView`
   flex: 24;
   background-color: #f3f3f3;
 `;
@@ -43,6 +47,7 @@ const Home = ({ navigation }) => {
   return (
     <Container>
       <MenuBtn title={'MenuBar'} onPress={() => navigation.navigate('MenuBar')}><Text>124214Home</Text></MenuBtn>
+      <ImageSlider sliderImages={sliderBanner} />
       <ProductsWrapper
         data={products}
         columnWrapperStyle={{

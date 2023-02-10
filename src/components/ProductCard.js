@@ -74,7 +74,6 @@ const ProductDescription = styled.Text`
 `
 
 function ProductCard({ product, width }) {
-  console.log(product)
   return (
     <Container width={width}>
       <TopWrapper
