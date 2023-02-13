@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from "react-native";
-import Slideshow from "react-native-image-slider-show";
+import { View } from "react-native";
+import Slideshow from "../modules/Slideshow";
+import { Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 const ImageSlider = ({ sliderImages = [] }) => {
   const [position, setPosition] = useState(0)
@@ -15,7 +18,7 @@ const ImageSlider = ({ sliderImages = [] }) => {
 
   return (
     <View>
-      <Slideshow position={position} height={250} dataSource={sliderImages} onPress={false} />
+      <Slideshow position={position} width={windowWidth} dataSource={sliderImages} />
     </View>
   );
 };

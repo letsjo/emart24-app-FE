@@ -1,22 +1,15 @@
-import { ScrollView, Text } from 'react-native'
 import styled from 'styled-components/native';
 
-import userApi from '../apis/userApi'
+import { userClient } from '../apis/userClient'
 import { useEffect, useState } from 'react';
 
 import ProductCard from '../components/ProductCard';
 import ImageSlider from '../components/ImageSlider';
 
 import { sliderBanner } from '../datas/SliderImageData';
+import { Button } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Container = styled.ScrollView`
-  flex: 24;
-  background-color: #f3f3f3;
-`;
-
-const MenuBtn = styled.Button`
-
-`
 const ProductsWrapper = styled.FlatList`
   background-color: #fff;
 `
@@ -29,50 +22,82 @@ const ProductsCardTouch = styled.TouchableOpacity`
 const Home = ({ navigation }) => {
 
   const [products, setProducts] = useState([]);
+  const [events, setEvents] = useState([]);
   const [containerWidth, setContainerWidth] = useState(0);
+
+  const access_token = AsyncStorage.getItem('access_token');
 
   const margins = 39 * 2;
   const numColumns = 2;
 
   useEffect(() => {
-    const getProductList = () => {
-      userApi.get('/products')
-        .then(res => {
-          setProducts(res.data);
-        }).catch(error => console.log(error));
+    const loadProductList = async () => {
+      try {
+        const productListAPI = userClient.get('/products');
+        const eventListAPI = userClient.get('/events');
+
+        let [responseProductList, responseEventList] =
+          await Promise.allSettled([
+            productListAPI,
+            eventListAPI,
+          ]);
+
+        if (responseProductList.status == "fulfilled") {
+          setProducts(responseProductList.value.data);
+        }
+
+        if (responseEventList.status == "fulfilled") {
+          setEvents(responseProductList.value.data);
+        }
+
+      } catch (e) {
+        console.log(e);
+      }
     }
-    getProductList();
+    loadProductList();
   }, []);
 
+  useEffect(() => {
+    console.log(access_token);
+  }, [access_token])
+
+  // console.log(products);
+  // console.log(events);
   return (
-    <Container>
-      <MenuBtn title={'MenuBar'} onPress={() => navigation.navigate('MenuBar')}><Text>124214Home</Text></MenuBtn>
-      <ImageSlider sliderImages={sliderBanner} />
+    <>
+      {/* <MenuBtn title={'MenuBar'} onPress={() => navigation.navigate('MenuBar')}><Text>124214Home</Text></MenuBtn> */ }
       <ProductsWrapper
-        data={products}
-        columnWrapperStyle={{
+        data={ products }
+        ListHeaderComponent={
+          <>
+            <Button title={ '로그인' } onPress={ () => navigation.navigate('Login') } />
+            <ImageSlider sliderImages={ sliderBanner } />
+          </>
+        }
+        columnWrapperStyle={ {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'flex-start',
           marginTop: 18,
           marginBottom: 18,
-        }}
-        onLayout={e => setContainerWidth(e.nativeEvent.layout.width)}
-        renderItem={(product) => (
+        } }
+        onLayout={ e => setContainerWidth(e.nativeEvent.layout.width) }
+        renderItem={ (product) => (
           <ProductsCardTouch
-            onPress={() => navigation.navigate('ProductDetail', { product })}
+            options={ ({ route }) => ({ product }) }
+            onPress={ () => navigation.navigate('ProductDetail', { product }) }
           >
             <ProductCard
-              width={(containerWidth - margins) / numColumns}
-              product={product.item}
+              scale={ ((containerWidth - margins) / numColumns) > 0 ? Number(((containerWidth - margins) / numColumns).toFixed(2)) : 0 }
+              product={ product.item }
             />
           </ProductsCardTouch>
-        )}
-        keyExtractor={(item, index) => index}
-        numColumns={numColumns}
+        ) }
+        keyExtractor={ (item) => item.id }
+        numColumns={ numColumns }
       />
-    </Container>
+    </>
   )
 }
 
