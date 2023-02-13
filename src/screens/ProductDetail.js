@@ -1,6 +1,6 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Image } from 'react-native';
 
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -16,20 +16,7 @@ const ScrollList = styled.ScrollView`
   flex: 24;
 `
 
-const MainImage = styled.Image`
-  ${({ windowWidth }) => {
-    return css`
-      width: ${windowWidth};
-      height: ${windowWidth};
-    `}
-  }
-`
 const TitleView = styled.View`
-  ${({ windowWidth }) => {
-    return css`
-      width: ${windowWidth};
-    `}
-  }
   padding: 20px; 
   padding-bottom: 150px;
 `
@@ -46,17 +33,21 @@ const Description = styled.Text`
   color: #2c2c2c;
 `;
 
-
 const ProductDetail = ({ navigation, route }) => {
-  const { id, category, price, discount, brand, name, description, thumbnail } = route.params.product.item;
+
+  const ProductInfo = route.params.product.item;
+  // const { id, category, price, discount, brand, name, description, thumbnail } = ProductInfo;
 
   return (
     <Container>
       <ScrollList>
-        <MainImage source={{ uri: thumbnail }} windowWidth={windowWidth} />
-        <TitleView>
-          <Name> {name}</Name>
-          <Description>{description}</Description>
+        <Image
+          source={ { uri: ProductInfo.thumbnail } }
+          style={ { width: windowWidth, height: windowWidth } }
+        />
+        <TitleView style={ { width: windowWidth } }>
+          <Name> { ProductInfo.name }</Name>
+          <Description>{ ProductInfo.description }</Description>
         </TitleView>
       </ScrollList>
     </Container>
