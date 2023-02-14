@@ -2,7 +2,7 @@
   "products": [
     {
       "id": 1,
-      "name": "롯데 빈츠 2입 리미티드기획 408g",
+      "name": "●롯데 빈츠 2입 리미티드기획 408g",
       "thumbnail": "https://sitem.ssgcdn.com/59/56/18/item/1000530185659_i1_1100.jpg",
       "price": 5370,
       "discount": 0,
@@ -114,44 +114,35 @@
   "events": [
     {
       "id": 1,
-      "display": "1+1",
-      "name": "1+1 발렌타인 이벤트",
-      "eventProductList": [
-        {
-          "id": 1,
-          "productId": 1
-        },
-        {
-          "id": 2,
-          "productId": 2
-        },
-        {
-          "id": 3,
-          "productId": 3
-        }
-      ]
+      "name": "1+1 발렌타인 이벤트"
     },
     {
       "id": 2,
-      "display": "EVENT",
-      "name": "졸업 축하 이벤트",
-      "eventProductList": [
-        {
-          "id": 1,
-          "productId": 1
-        },
-        {
-          "id": 2,
-          "productId": 2
-        }
-      ]
+      "name": "졸업 축하 이벤트"
+    }
+  ],
+  "eventProducts": [
+    {
+      "id": 1,
+      "eventId": 1,
+      "productId": 1
+    },
+    {
+      "id": 2,
+      "eventId": 1,
+      "productId": 2
+    },
+    {
+      "id": 3,
+      "eventId": 2,
+      "productId": 1
     }
   ],
   "users": [
     {
       "email": "123@naver.com",
-      "password": "$2a$10$YJnJv..N6kbJ87.kymdR0eNpudvza/mkcyjEhd/ojz1MtNF3/arsC",
-      "name": "조현오",
+      "password": "$2a$10$BPUIPwHTJQl75AtNn6Aag.0E9p1TMpz/R53Qj4YZQUu8azq3pJmqy",
+      "name": "조현오1",
       "id": 1
     },
     {
@@ -159,6 +150,75 @@
       "password": "$2a$10$c2RI999ld9dG6w0h3r.7ueeOm4bvqJux.WAA0ERMLl7aBIpUFD3pC",
       "name": "hyunoh",
       "id": 2
+    },
+    {
+      "email": "999@naver.com",
+      "password": "$2a$10$bCDwwyCEXIbl/RwSZzxzled2wb0Q5spmYqyQl0H0zWjw6VMUH7PSG",
+      "name": "HYUNOHJO",
+      "id": 3
+    }
+  ],
+  "entry": [],
+  "carts": [
+    {
+      "productId": 1,
+      "quantity": 1,
+      "userId": 3,
+      "id": 3
+    },
+    {
+      "productId": 9,
+      "quantity": 1,
+      "userId": 2,
+      "id": 4
+    },
+    {
+      "productId": 6,
+      "quantity": 1,
+      "userId": 2,
+      "id": 5
+    },
+    {
+      "productId": 5,
+      "quantity": 1,
+      "userId": 1,
+      "id": 10
+    },
+    {
+      "productId": 6,
+      "quantity": 1,
+      "userId": 1,
+      "id": 11
+    },
+    {
+      "productId": 7,
+      "quantity": 1,
+      "userId": 1,
+      "id": 12
+    },
+    {
+      "productId": 8,
+      "quantity": 1,
+      "userId": 1,
+      "id": 13
+    },
+    {
+      "productId": 9,
+      "quantity": 1,
+      "userId": 1,
+      "id": 14
+    },
+    {
+      "productId": 10,
+      "quantity": 1,
+      "userId": 1,
+      "id": 15
+    },
+    {
+      "productId": 3,
+      "quantity": 1,
+      "userId": 1,
+      "id": 19
     }
   ]
 }
