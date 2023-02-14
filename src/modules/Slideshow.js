@@ -174,75 +174,75 @@ export default class Slideshow extends Component {
     const height = this.props.height || this.state.height;
     const position = this._getPosition();
     return (
-      <View style={[
+      <View style={ [
         this.props.containerStyle,
         { height: height }
-      ]}>
-        {/* SECTION IMAGE */}
+      ] }>
+        {/* SECTION IMAGE */ }
         <ScrollView
-          ref={ref => this._onRef(ref)}
-          decelerationRate={0.99}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          scrollEnabled={this.props.scrollEnabled}
-          {...this._panResponder.panHandlers}
-          style={[
+          ref={ ref => this._onRef(ref) }
+          decelerationRate={ 0.99 }
+          horizontal={ true }
+          showsHorizontalScrollIndicator={ false }
+          scrollEnabled={ this.props.scrollEnabled }
+          { ...this._panResponder.panHandlers }
+          style={ [
             styles.container,
             { height: height }
-          ]}>
-          {this.props.dataSource.map((image, index) => {
+          ] }>
+          { this.props.dataSource.map((image, index) => {
             const imageObject = typeof image.url === 'string' ? { uri: image.url } : image.url;
             const textComponent = (
-              <View style={styles.layoutText}>
-                {image.title === undefined ? null : <Text style={this.props.titleStyle}>{image.title}</Text>}
-                {image.caption === undefined ? null : <Text style={this.props.captionStyle}>{image.caption}</Text>}
+              <View style={ styles.layoutText }>
+                { image.title === undefined ? null : <Text style={ this.props.titleStyle }>{ image.title }</Text> }
+                { image.caption === undefined ? null : <Text style={ this.props.captionStyle }>{ image.caption }</Text> }
               </View>
             );
             const imageComponent = (
-              <View key={index}>
+              <View key={ index }>
                 <Image
-                  source={imageObject}
-                  style={{ height, width }} />
-                {textComponent}
+                  source={ imageObject }
+                  style={ { height, width } } />
+                { textComponent }
               </View>
             );
             const imageComponentWithOverlay = (
-              <View key={index} style={styles.containerImage}>
-                <View style={styles.overlay}>
+              <View key={ index } style={ styles.containerImage }>
+                <View style={ styles.overlay }>
                   <Image
-                    source={imageObject}
-                    style={{ height, width }} />
+                    source={ imageObject }
+                    style={ { height, width } } />
                 </View>
-                {textComponent}
+                { textComponent }
               </View>
             );
             if (this.props.onPress) {
               return (
                 <TouchableOpacity
-                  key={index}
-                  style={{ height, width }}
-                  onPress={() => this.props.onPress(image.onPress)}
-                  delayPressIn={200}>
-                  {this.props.overlay ? imageComponentWithOverlay : imageComponent}
+                  key={ index }
+                  style={ { height, width } }
+                  onPress={ () => this.props.onPress(image.onPress) }
+                  delayPressIn={ 200 }>
+                  { this.props.overlay ? imageComponentWithOverlay : imageComponent }
                 </TouchableOpacity>
               );
             } else {
               return this.props.overlay ? imageComponentWithOverlay : imageComponent
             }
-          })}
+          }) }
         </ScrollView>
-        {/* END SECTION IMAGE */}
-        {/* SECTION INDICATOR */}
+        {/* END SECTION IMAGE */ }
+        {/* SECTION INDICATOR */ }
         <View
-          style={[
+          style={ [
             styles.layoutIndicator,
-          ]}>
-          {this.props.dataSource.map((image, index) => {
+          ] }>
+          { this.props.dataSource.map((image, index) => {
             return (
               <TouchableOpacity
-                key={index}
-                onPress={() => { return this._move(index); }}
-                style={[
+                key={ index }
+                onPress={ () => { return this._move(index); } }
+                style={ [
                   [
                     styles.indicator,
                     setIndicatorSize(this.props.indicatorSize),
@@ -253,54 +253,53 @@ export default class Slideshow extends Component {
                     styles.indicatorSelected,
                     setIndicatorColor(this.props.indicatorSelectedColor)
                   ]
-                ]}>
-                <View></View>
+                ] }>
               </TouchableOpacity>);
-          })}
+          }) }
         </View>
-        {/* END SECTION INDICATOR */}
-        {/* SECTION ARROW LEFT */}
+        {/* END SECTION INDICATOR */ }
+        {/* SECTION ARROW LEFT */ }
         <View
-          style={[
+          style={ [
             layoutArrow(this.props.height, this.props.arrowSize),
             { left: 10, height: 50 },
-          ]}>
+          ] }>
           <TouchableOpacity
-            onPress={() => this._prev()}>
+            onPress={ () => this._prev() }>
             {
               this.props.arrowRight == undefined ?
                 <View
-                  style={[
+                  style={ [
                     iconArrow(this.props.arrowSize),
                     iconArrowLeft(this.props.arrowSize),
-                  ]} />
+                  ] } />
                 :
                 this.props.arrowLeft
             }
           </TouchableOpacity>
         </View>
-        {/* END SECTION ARROW LEFT */}
-        {/* SECTION ARROW RIGHT */}
+        {/* END SECTION ARROW LEFT */ }
+        {/* SECTION ARROW RIGHT */ }
         <View
-          style={[
+          style={ [
             layoutArrow(this.props.height, this.props.arrowSize),
             { right: 10, height: 50 },
-          ]}>
+          ] }>
           <TouchableOpacity
-            onPress={() => this._next()}>
+            onPress={ () => this._next() }>
             {
               this.props.arrowRight == undefined ?
                 <View
-                  style={[
+                  style={ [
                     iconArrow(this.props.arrowSize),
                     iconArrowRight(this.props.arrowSize),
-                  ]} />
+                  ] } />
                 :
                 this.props.arrowRight
             }
           </TouchableOpacity>
         </View>
-        {/* END SECTION ARROW RIGHT */}
+        {/* END SECTION ARROW RIGHT */ }
       </View>
     );
   }

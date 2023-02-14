@@ -7,8 +7,6 @@ import ProductCard from '../components/ProductCard';
 import ImageSlider from '../components/ImageSlider';
 
 import { sliderBanner } from '../datas/SliderImageData';
-import { Button } from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProductsWrapper = styled.FlatList`
   background-color: #fff;
@@ -24,8 +22,6 @@ const Home = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [events, setEvents] = useState([]);
   const [containerWidth, setContainerWidth] = useState(0);
-
-  const access_token = AsyncStorage.getItem('access_token');
 
   const margins = 39 * 2;
   const numColumns = 2;
@@ -47,7 +43,8 @@ const Home = ({ navigation }) => {
         }
 
         if (responseEventList.status == "fulfilled") {
-          setEvents(responseProductList.value.data);
+
+          setEvents(responseEventList.value.data);
         }
 
       } catch (e) {
@@ -57,22 +54,12 @@ const Home = ({ navigation }) => {
     loadProductList();
   }, []);
 
-  useEffect(() => {
-    console.log(access_token);
-  }, [access_token])
-
-  // console.log(products);
-  // console.log(events);
   return (
     <>
-      {/* <MenuBtn title={'MenuBar'} onPress={() => navigation.navigate('MenuBar')}><Text>124214Home</Text></MenuBtn> */ }
       <ProductsWrapper
         data={ products }
         ListHeaderComponent={
-          <>
-            <Button title={ '로그인' } onPress={ () => navigation.navigate('Login') } />
-            <ImageSlider sliderImages={ sliderBanner } />
-          </>
+          <ImageSlider sliderImages={ sliderBanner } />
         }
         columnWrapperStyle={ {
           display: 'flex',
@@ -91,6 +78,7 @@ const Home = ({ navigation }) => {
             <ProductCard
               scale={ ((containerWidth - margins) / numColumns) > 0 ? Number(((containerWidth - margins) / numColumns).toFixed(2)) : 0 }
               product={ product.item }
+              navigation={ navigation }
             />
           </ProductsCardTouch>
         ) }

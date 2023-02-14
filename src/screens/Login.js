@@ -1,16 +1,18 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { UserState } from '../state/UserState';
-import { TouchableOpacity, TextInput, Text, View, Alert, StyleSheet, SafeAreaView } from 'react-native';
+import { CartState } from '../state/CartState';
+import { TouchableOpacity, TextInput, Text, Alert, StyleSheet, SafeAreaView, BackHandler, Image } from 'react-native';
 import { signInApi } from '../apis/user';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login({ navigation }) {
   const [userData, setUserData] = useRecoilState(UserState);
+  const setCartState = useSetRecoilState(CartState);
 
   const successAlert = ({ name }) =>
     Alert.alert('로그인 완료', `${name} 님 환영합니다.`, [
-      { text: 'OK', onPress: () => navigation.goBack() },
+      { text: 'OK', onPress: () => navigation.navigate('Home') },
     ]);
 
   const errorAlert = () =>
@@ -20,29 +22,47 @@ function Login({ navigation }) {
 
   const onLogin = () => {
     signInApi(userData).then((res) => {
-      AsyncStorage.setItem('access_token', res.data.accessToken);
-      setUserData({ ...userData, accessToken: res.data.accessToken })
+      setCartState('flex');
+      AsyncStorage.setItem(
+        'accessToken',
+        JSON.stringify({
+          userId: res.data.user.id,
+          accessToken: res.data.accessToken,
+        })
+      );
+      setUserData({ ...userData, name: res.data.user.name, userId: res.data.user.id, accessToken: res.data.accessToken })
       successAlert({ name: res.data.user.name });
     }).catch(() => {
       errorAlert();
     });
   }
 
+  const handlePressBack = () => {
+    if (navigation?.canGoBack()) {
+      navigation.navigate('Home');
+      return true
+    }
+    return false
+  }
+
   useEffect(() => {
-    const access_token = AsyncStorage.getItem('access_token');
-    console.log(access_token);
-  }, [])
+    BackHandler.addEventListener('hardwareBackPress', handlePressBack)
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handlePressBack)
+    }
+  }, [handlePressBack])
 
   return (
     <SafeAreaView style={ styles.container }>
+      <Image style={ styles.image } source={ require('../../assets/logo.png') } />
       <TextInput
         onChangeText={ (email) => setUserData({ ...userData, email }) }
-        placeholder={ 'Username' }
+        placeholder={ '이메일 또는 아이디' }
         style={ styles.input }
       />
       <TextInput
         onChangeText={ (password) => setUserData({ ...userData, password }) }
-        placeholder={ 'Password' }
+        placeholder={ '비밀번호' }
         secureTextEntry={ true }
         autoComplete={ 'off' }
         style={ styles.input }
@@ -69,9 +89,16 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ecf0f1',
+  },
+  image: {
+    width: 170,
+    height: 30,
+    marginBottom: 50,
   },
   input: {
     width: 200,

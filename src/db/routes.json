@@ -1,6 +1,9 @@
 {
   "products": 444,
   "events": 444,
-  "user": 600,
-  "carts": 600
+  "users": 600,
+  "entry": 600,
+  "carts": 600,
+  "/carts/:userId": "/carts?userId=:userId",
+  "/entry/:userId/:isEntry": "/entry?userId=:userId&isEntry=:isEntry"
 }
