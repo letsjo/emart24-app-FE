@@ -4,11 +4,11 @@ import styled from 'styled-components/native';
 const MenuBar = () => {
   return (
     <View>
-      {/* <ScrollView>
+      <ScrollView>
         <Text>MenuBar</Text>
         <Text>MenuBar</Text>
         <Text>MenuBar</Text>
-      </ScrollView> */}
+      </ScrollView>
     </View>
   )
 }
